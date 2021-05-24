@@ -14,6 +14,7 @@ import { ApiContentWrap, BackgroundStub, RedocWrap } from './styled.elements';
 
 import { SearchBox } from '../SearchBox/SearchBox';
 import { StoreProvider } from '../StoreBuilder';
+import { GlobalStyle } from '../../theme';
 
 export interface RedocProps {
   store: AppStore;
@@ -41,6 +42,7 @@ export class Redoc extends React.Component<RedocProps> {
       <ThemeProvider theme={options.theme}>
         <StoreProvider value={this.props.store}>
           <OptionsProvider value={options}>
+            <GlobalStyle />
             <RedocWrap className="redoc-wrap">
               <StickyResponsiveSidebar menu={menu} className="menu-content">
                 <ApiLogo info={spec.info} />

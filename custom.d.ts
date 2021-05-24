@@ -15,6 +15,21 @@ declare module '*.css' {
   export default content;
 }
 
+declare module '*.eot' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.woff' {
+  const content: string;
+  export default content;
+}
+
+declare module '*.woff2' {
+  const content: string;
+  export default content;
+}
+
 declare var __REDOC_VERSION__: string;
 declare var __REDOC_REVISION__: string;
 

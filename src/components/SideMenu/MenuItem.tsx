@@ -2,11 +2,10 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 
-import { ShelfIcon } from '../../common-elements/shelfs';
 import { IMenuItem, OperationModel } from '../../services';
 import { shortenHTTPVerb } from '../../utils/openapi';
 import { MenuItems } from './MenuItems';
-import { MenuItemLabel, MenuItemLi, MenuItemTitle, OperationBadge } from './styled.elements';
+import { MenuItemLabel, MenuItemTitle, OperationBadge, StyledMuiListItem } from './styled.elements';
 import { l } from '../../services/Labels';
 
 export interface MenuItemProps {
@@ -41,21 +40,26 @@ export class MenuItem extends React.Component<MenuItemProps> {
   render() {
     const { item, withoutChildren } = this.props;
     return (
-      <MenuItemLi onClick={this.activate} depth={item.depth} data-item-id={item.id}>
-        {item.type === 'operation' ? (
-          <OperationMenuItemContent {...this.props} item={item as OperationModel} />
-        ) : (
-          <MenuItemLabel depth={item.depth} active={item.active} type={item.type} ref={this.ref}>
-            <MenuItemTitle title={item.name}>
-              {item.name}
-              {this.props.children}
-            </MenuItemTitle>
-            {(item.depth > 0 && item.items.length > 0 && (
-              <ShelfIcon float={'right'} direction={item.expanded ? 'down' : 'right'} />
-            )) ||
-              null}
-          </MenuItemLabel>
-        )}
+      <>
+        <StyledMuiListItem
+          /*
+        // @ts-ignore */
+          button={(item.depth !== 0) as boolean}
+          onClick={this.activate}
+          disableGutters
+          data-item-id={item.id}
+        >
+          {item.type === 'operation' ? (
+            <OperationMenuItemContent {...this.props} item={item as OperationModel} />
+          ) : (
+            <MenuItemLabel depth={item.depth} active={item.active} type={item.type} ref={this.ref}>
+              <MenuItemTitle title={item.name}>
+                {item.name}
+                {this.props.children}
+              </MenuItemTitle>
+            </MenuItemLabel>
+          )}
+        </StyledMuiListItem>
         {!withoutChildren && item.items && item.items.length > 0 && (
           <MenuItems
             expanded={item.expanded}
@@ -63,7 +67,7 @@ export class MenuItem extends React.Component<MenuItemProps> {
             onActivate={this.props.onActivate}
           />
         )}
-      </MenuItemLi>
+      </>
     );
   }
 }

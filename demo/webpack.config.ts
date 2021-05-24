@@ -98,7 +98,13 @@ export default (env: { playground?: boolean; bench?: boolean } = {}, { mode }) =
   module: {
     rules: [
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
-      { test: [/\.eot$/, /\.gif$/, /\.woff$/, /\.svg$/, /\.ttf$/], use: 'null-loader' },
+      { test: [/\.gif$/, /\.svg$/], use: 'null-loader' },
+      {
+        test: /\.(eot|woff|woff2)$/,
+        use: {
+          loader: 'url-loader',
+        },
+      },
       {
         test: /\.tsx?$/,
         use: compact([

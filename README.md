@@ -294,8 +294,8 @@ You can use all of the following options with standalone version on <redoc> tag 
     * `visited`: # COMPUTED: typography.links.color
     * `hover`: # COMPUTED: lighten(0.2 typography.links.color)
 * `menu`
-  * `width`: '260px'
-  * `backgroundColor`: '#fafafa'
+  * `width`: '239px'
+  * `backgroundColor`: '#fff'
   * `textColor`: '#333333'
   * `activeTextColor`: # COMPUTED: theme.menu.textColor (if set by user) or theme.colors.primary.main
   * `groupItems` # Group headings

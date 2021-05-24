@@ -234,7 +234,7 @@ export class OpenAPIParser {
           schema: subMerged,
         };
       })
-      .filter(child => child !== undefined) as Array<{
+      .filter((child) => child !== undefined) as Array<{
       $ref: string | undefined;
       schema: MergedOpenAPISchema;
     }>;
@@ -265,7 +265,7 @@ export class OpenAPIParser {
               { allOf: [receiver.properties[prop], subSchema.properties[prop]] },
               $ref + '/properties/' + prop,
             );
-            receiver.properties[prop] = mergedProp
+            receiver.properties[prop] = mergedProp;
             this.exitParents(mergedProp); // every prop resolution should have separate recursive stack
           }
         }
@@ -313,7 +313,7 @@ export class OpenAPIParser {
       const def = this.deref(schemas[defName]);
       if (
         def.allOf !== undefined &&
-        def.allOf.find(obj => obj.$ref !== undefined && $refs.indexOf(obj.$ref) > -1)
+        def.allOf.find((obj) => obj.$ref !== undefined && $refs.indexOf(obj.$ref) > -1)
       ) {
         res['#/components/schemas/' + defName] = [def['x-discriminator-value'] || defName];
       }
@@ -339,7 +339,7 @@ export class OpenAPIParser {
         const beforeAllOf = allOf.slice(0, i);
         const afterAllOf = allOf.slice(i + 1);
         return {
-          oneOf: sub.oneOf.map(part => {
+          oneOf: sub.oneOf.map((part) => {
             const merged = this.mergeAllOf({
               allOf: [...beforeAllOf, part, ...afterAllOf],
             });

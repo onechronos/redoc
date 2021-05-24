@@ -68,7 +68,7 @@ export function getOperationSummary(operation: ExtendedOpenAPIOperation): string
     operation.operationId ||
     (operation.description && operation.description.substring(0, 50)) ||
     operation.pathName ||
-   '<no summary>'
+    '<no summary>'
   );
 }
 
@@ -141,10 +141,10 @@ export function isFormUrlEncoded(contentType: string): boolean {
 
 function delimitedEncodeField(fieldVal: any, fieldName: string, delimiter: string): string {
   if (Array.isArray(fieldVal)) {
-    return fieldVal.map(v => v.toString()).join(delimiter);
+    return fieldVal.map((v) => v.toString()).join(delimiter);
   } else if (typeof fieldVal === 'object') {
     return Object.keys(fieldVal)
-      .map(k => `${k}${delimiter}${fieldVal[k]}`)
+      .map((k) => `${k}${delimiter}${fieldVal[k]}`)
       .join(delimiter);
   } else {
     return fieldName + '=' + fieldVal.toString();
@@ -157,7 +157,7 @@ function deepObjectEncodeField(fieldVal: any, fieldName: string): string {
     return '';
   } else if (typeof fieldVal === 'object') {
     return Object.keys(fieldVal)
-      .map(k => `${fieldName}[${k}]=${fieldVal[k]}`)
+      .map((k) => `${fieldName}[${k}]=${fieldVal[k]}`)
       .join('&');
   } else {
     console.warn('deepObject style cannot be used with non-object value:' + fieldVal.toString());
@@ -189,7 +189,7 @@ export function urlFormEncodePayload(
     throw new Error('Payload must have fields: ' + payload.toString());
   } else {
     return Object.keys(payload)
-      .map(fieldName => {
+      .map((fieldName) => {
         const fieldVal = payload[fieldName];
         const { style = 'form', explode = true } = encoding[fieldName] || {};
         switch (style) {
@@ -373,7 +373,7 @@ export function isNamedDefinition(pointer?: string): boolean {
 export function getDefinitionName(pointer?: string): string | undefined {
   if (!pointer) return undefined;
   const match = pointer.match(/^#\/components\/schemas\/([^\/]+)$/);
-  return match === null ? undefined : match[1]
+  return match === null ? undefined : match[1];
 }
 
 function humanizeMultipleOfConstraint(multipleOf: number | undefined): string | undefined {
@@ -461,7 +461,7 @@ export function sortByRequired(fields: FieldModel[], order: string[] = []) {
   const orderedFields: FieldModel[] = [];
   const unorderedFields: FieldModel[] = [];
 
-  fields.forEach(field => {
+  fields.forEach((field) => {
     if (field.required) {
       order.includes(field.name) ? orderedFields.push(field) : unorderedFields.push(field);
     } else {
@@ -489,13 +489,13 @@ export function mergeParams(
   operationParams: Array<Referenced<OpenAPIParameter>> = [],
 ): Array<Referenced<OpenAPIParameter>> {
   const operationParamNames = {};
-  operationParams.forEach(param => {
+  operationParams.forEach((param) => {
     param = parser.shalowDeref(param);
     operationParamNames[param.name + '_' + param.in] = true;
   });
 
   // filter out path params overridden by operation ones with the same name
-  pathParams = pathParams.filter(param => {
+  pathParams = pathParams.filter((param) => {
     param = parser.shalowDeref(param);
     return !operationParamNames[param.name + '_' + param.in];
   });
@@ -507,7 +507,7 @@ export function mergeSimilarMediaTypes(
   types: Record<string, OpenAPIMediaType>,
 ): Record<string, OpenAPIMediaType> {
   const mergedTypes = {};
-  Object.keys(types).forEach(name => {
+  Object.keys(types).forEach((name) => {
     const mime = types[name];
     // ignore content type parameters (e.g. charset) and merge
     const normalizedMimeName = name.split(';')[0].trim();
@@ -555,7 +555,7 @@ export function normalizeServers(
     return resolveUrl(baseUrl, url);
   }
 
-  return servers.map(server => {
+  return servers.map((server) => {
     return {
       ...server,
       url: normalizeUrl(server.url),
@@ -573,7 +573,7 @@ export function setSecuritySchemePrefix(prefix: string) {
   SECURITY_SCHEMES_SECTION_PREFIX = prefix;
 }
 
-export const shortenHTTPVerb = verb =>
+export const shortenHTTPVerb = (verb) =>
   ({
     delete: 'del',
     options: 'opts',
@@ -604,7 +604,7 @@ export function extractExtensions(
   showExtensions: string[] | true,
 ): Record<string, any> {
   return Object.keys(obj)
-    .filter(key => {
+    .filter((key) => {
       if (showExtensions === true) {
         return key.startsWith('x-') && !isRedocExtension(key);
       }
@@ -619,6 +619,6 @@ export function extractExtensions(
 export function pluralizeType(displayType: string): string {
   return displayType
     .split(' or ')
-    .map(type => type.replace(/^(string|object|number|integer|array|boolean)s?( ?.*)/, '$1s$2'))
+    .map((type) => type.replace(/^(string|object|number|integer|array|boolean)s?( ?.*)/, '$1s$2'))
     .join(' or ');
 }

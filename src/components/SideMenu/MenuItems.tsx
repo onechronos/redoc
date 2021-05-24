@@ -4,7 +4,8 @@ import * as React from 'react';
 import { IMenuItem } from '../../services';
 
 import { MenuItem } from './MenuItem';
-import { MenuItemUl } from './styled.elements';
+import Collapse from '@material-ui/core/Collapse';
+import List from '@material-ui/core/List';
 
 export interface MenuItemsProps {
   items: IMenuItem[];
@@ -22,16 +23,18 @@ export class MenuItems extends React.Component<MenuItemsProps> {
     const { items, root, className } = this.props;
     const expanded = this.props.expanded == null ? true : this.props.expanded;
     return (
-      <MenuItemUl
+      <List
         className={className}
         style={this.props.style}
-        expanded={expanded}
+        disablePadding
         {...(root ? { role: 'navigation' } : {})}
       >
-        {items.map((item, idx) => (
-          <MenuItem key={idx} item={item} onActivate={this.props.onActivate} />
-        ))}
-      </MenuItemUl>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          {items.map((item, idx) => (
+            <MenuItem key={idx} item={item} onActivate={this.props.onActivate} />
+          ))}
+        </Collapse>
+      </List>
     );
   }
 }

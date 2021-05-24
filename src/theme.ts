@@ -1,5 +1,72 @@
 import { darken, desaturate, lighten, readableColor, transparentize } from 'polished';
 
+import CWBREot from '../static/fonts/ColfaxWebBold/ColfaxWebBold.eot';
+import CWBRWoff from '../static/fonts/ColfaxWebBold/ColfaxWebBold.woff';
+import CWBRWoff2 from '../static/fonts/ColfaxWebBold/ColfaxWebBold.woff2';
+
+import CWBIEot from '../static/fonts/ColfaxWebBoldItalic/ColfaxWebBoldItalic.eot';
+import CWBIWoff from '../static/fonts/ColfaxWebBoldItalic/ColfaxWebBoldItalic.woff';
+import CWBIWoff2 from '../static/fonts/ColfaxWebBoldItalic/ColfaxWebBoldItalic.woff2';
+
+import CWLREot from '../static/fonts/ColfaxWebLight/ColfaxWebLight.eot';
+import CWLRWoff from '../static/fonts/ColfaxWebLight/ColfaxWebLight.woff';
+import CWLRWoff2 from '../static/fonts/ColfaxWebLight/ColfaxWebLight.woff2';
+
+import CWLIEot from '../static/fonts/ColfaxWebLightItalic/ColfaxWebLightItalic.eot';
+import CWLIWoff from '../static/fonts/ColfaxWebLightItalic/ColfaxWebLightItalic.woff';
+import CWLIWoff2 from '../static/fonts/ColfaxWebLightItalic/ColfaxWebLightItalic.woff2';
+
+import CWMREot from '../static/fonts/ColfaxWebMedium/ColfaxWebMedium.eot';
+import CWMRWoff from '../static/fonts/ColfaxWebMedium/ColfaxWebMedium.woff';
+import CWMRWoff2 from '../static/fonts/ColfaxWebMedium/ColfaxWebMedium.woff2';
+
+import CWMIEot from '../static/fonts/ColfaxWebMediumItalic/ColfaxWebMediumItalic.eot';
+import CWMIWoff from '../static/fonts/ColfaxWebMediumItalic/ColfaxWebMediumItalic.woff';
+import CWMIWoff2 from '../static/fonts/ColfaxWebMediumItalic/ColfaxWebMediumItalic.woff2';
+
+import CWRREot from '../static/fonts/ColfaxWebRegular/ColfaxWebRegular.eot';
+import CWRRWoff from '../static/fonts/ColfaxWebRegular/ColfaxWebRegular.woff';
+import CWRRWoff2 from '../static/fonts/ColfaxWebRegular/ColfaxWebRegular.woff2';
+
+import CWRIEot from '../static/fonts/ColfaxWebRegularItalic/ColfaxWebRegularItalic.eot';
+import CWRIWoff from '../static/fonts/ColfaxWebMediumItalic/ColfaxWebMediumItalic.woff';
+import CWRIWoff2 from '../static/fonts/ColfaxWebMediumItalic/ColfaxWebMediumItalic.woff2';
+import { createGlobalStyle } from 'styled-components';
+
+const makeColfax = (
+  fontStyle: string,
+  fontWeight: number,
+  eotPath: string,
+  woff2Path: string,
+  woffPath: string,
+) => {
+  return `
+  @font-face {
+    font-family: 'ColfaxWeb';
+    font-style: ${fontStyle};
+    font-weight: ${fontWeight};
+    font-synthesis:weight;
+    src: url('${eotPath}') format('embedded-opentype'),
+          url('${woff2Path}') format('woff2'),
+          url('${woffPath}') format('woff');
+  }`;
+};
+
+const COLFAX_FONT_FAMILY = `
+  ${makeColfax('normal', 300, CWLREot, CWLRWoff2, CWLRWoff)}
+  ${makeColfax('italic', 300, CWLIEot, CWLIWoff2, CWLIWoff)}
+  ${makeColfax('normal', 400, CWRREot, CWRRWoff2, CWRRWoff)}
+  ${makeColfax('italic', 400, CWRIEot, CWRIWoff2, CWRIWoff)}
+  ${makeColfax('normal', 500, CWMREot, CWMRWoff2, CWMRWoff)}
+  ${makeColfax('italic', 500, CWMIEot, CWMIWoff2, CWMIWoff)}
+  ${makeColfax('normal', 700, CWBREot, CWBRWoff2, CWBRWoff)}
+  ${makeColfax('italic', 700, CWBIEot, CWBIWoff2, CWBIWoff)}
+`;
+
+export const GlobalStyle = createGlobalStyle`
+${COLFAX_FONT_FAMILY}
+`;
+
 const defaultTheme: ThemeInterface = {
   spacing: {
     unit: 5,
@@ -14,7 +81,7 @@ const defaultTheme: ThemeInterface = {
   colors: {
     tonalOffset: 0.2,
     primary: {
-      main: '#32329f',
+      main: '#325e8d',
       light: ({ colors }) => lighten(colors.tonalOffset, colors.primary.main),
       dark: ({ colors }) => darken(colors.tonalOffset, colors.primary.main),
       contrastText: ({ colors }) => readableColor(colors.primary.main),
@@ -84,21 +151,21 @@ const defaultTheme: ThemeInterface = {
     },
   },
   schema: {
-    linesColor: theme =>
+    linesColor: (theme) =>
       lighten(
         theme.colors.tonalOffset,
         desaturate(theme.colors.tonalOffset, theme.colors.primary.main),
       ),
     defaultDetailsWidth: '75%',
-    typeNameColor: theme => theme.colors.text.secondary,
-    typeTitleColor: theme => theme.schema.typeNameColor,
-    requireLabelColor: theme => theme.colors.error.main,
+    typeNameColor: (theme) => theme.colors.text.secondary,
+    typeTitleColor: (theme) => theme.schema.typeNameColor,
+    requireLabelColor: (theme) => theme.colors.error.main,
     labelsTextSize: '0.9em',
     nestingSpacing: '1em',
     nestedBackground: '#fafafa',
     arrow: {
       size: '1.1em',
-      color: theme => theme.colors.text.secondary,
+      color: (theme) => theme.colors.text.secondary,
     },
   },
   typography: {
@@ -107,13 +174,12 @@ const defaultTheme: ThemeInterface = {
     fontWeightRegular: '400',
     fontWeightBold: '600',
     fontWeightLight: '300',
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'ColfaxWeb',
     smoothing: 'antialiased',
     optimizeSpeed: true,
     headings: {
-      fontFamily: 'Montserrat, sans-serif',
-      fontWeight: '400',
-      lineHeight: '1.6em',
+      fontFamily: 'ColfaxWeb',
+      lineHeight: '1.43',
     },
     code: {
       fontSize: '13px',
@@ -131,10 +197,10 @@ const defaultTheme: ThemeInterface = {
     },
   },
   sidebar: {
-    width: '260px',
-    backgroundColor: '#fafafa',
+    width: '239px',
+    backgroundColor: '#fff',
     textColor: '#333333',
-    activeTextColor: theme =>
+    activeTextColor: (theme) =>
       theme.sidebar.textColor !== defaultTheme.sidebar!.textColor
         ? theme.sidebar.textColor
         : theme.colors.primary.main,
@@ -146,7 +212,7 @@ const defaultTheme: ThemeInterface = {
     },
     arrow: {
       size: '1.5em',
-      color: theme => theme.sidebar.textColor,
+      color: (theme) => theme.sidebar.textColor,
     },
   },
   logo: {
@@ -170,7 +236,7 @@ export function resolveTheme(theme: ThemeInterface): ResolvedThemeInterface {
   const resolvedValues = {};
   let counter = 0;
   const setProxy = (obj, path: string) => {
-    Object.keys(obj).forEach(k => {
+    Object.keys(obj).forEach((k) => {
       const currentPath = (path ? path + '.' : '') + k;
       const val = obj[k];
       if (typeof val === 'function') {
